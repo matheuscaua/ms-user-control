@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioServico {
 
@@ -20,6 +22,13 @@ public class UsuarioServico {
         usuarioRepositorio.save(usuarioEntidade);
     }
 
+    public List<Usuario> buscarNome(String nome) {
+        return usuarioRepositorio.buscarUsuarioPorNome(nome);
+    }
+
+    public List<Usuario> buscarTodos() {
+        return usuarioRepositorio.findAll();
+    }
 
 
 }
