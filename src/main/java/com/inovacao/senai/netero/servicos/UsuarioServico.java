@@ -14,9 +14,9 @@ public class UsuarioServico {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    public void cadastrar(UsuarioDTO usuarioDTO){
+    public void cadastrar(UsuarioDTO usuarioDTO) {
         Usuario usuarioEntidade = new Usuario();
-        BeanUtils.copyProperties(usuarioEntidade, usuarioDTO);
+        BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
         usuarioRepositorio.save(usuarioEntidade);
     }
 

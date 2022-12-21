@@ -4,6 +4,7 @@ import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,11 @@ public class UsuarioControlador {
     private UsuarioServico usuarioServico;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity cadastrar(@RequestBody @Validated UsuarioDTO usuarioDTO) {
         usuarioServico.cadastrar(usuarioDTO);
         return ResponseEntity.status(201).build();
     }
 
 }
+
+
