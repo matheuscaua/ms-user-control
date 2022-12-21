@@ -6,6 +6,7 @@ import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class UsuarioServico {
     private UsuarioRepositorio usuarioRepositorio;
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
+        usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
         Usuario usuarioEntidade = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
         usuarioRepositorio.save(usuarioEntidade);

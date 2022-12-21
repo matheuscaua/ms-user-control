@@ -1,6 +1,5 @@
 package com.inovacao.senai.netero.modelos.dto;
 
-import jakarta.persistence.NamedNativeQuery;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -12,10 +11,13 @@ public class UsuarioDTO {
     @NotEmpty(message = "Nome obrigatório...")
     private String nome;
 
-    @NotEmpty(message = "Sobrenome obrigatório")
+    @NotEmpty(message = "Senha obrigatória...")
+    private String senha;
+
+    @NotEmpty(message = "Sobrenome obrigatório...")
     private String sobrenome;
 
-    @NotEmpty(message = "telefone obrigatório")
+    @NotEmpty(message = "telefone obrigatório...")
     private String telefone;
 
     @Email(message = "Email inválido...")
