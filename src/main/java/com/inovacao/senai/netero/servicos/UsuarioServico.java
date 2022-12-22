@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServico {
@@ -25,12 +26,19 @@ public class UsuarioServico {
     }
 
     public List<Usuario> buscarNome(String nome) {
-        return usuarioRepositorio.buscarUsuarioPorNome(nome);
+        List<Usuario> usuarios = usuarioRepositorio.buscarUsuarioPorNome(nome);
+
+        List<Usuario> matheus = usuarios.stream().filter(u -> u.getNome().equals("Matheus")).collect(Collectors.toList());
+
+        return matheus;
     }
 
     public List<Usuario> buscarTodos() {
         return usuarioRepositorio.findAll();
     }
+
+
+
 
 
 }
