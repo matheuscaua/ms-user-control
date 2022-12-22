@@ -10,13 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UsuarioRepositorio extends JpaRepository<Usuario, UUID> {
+public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
     @Query(value = "select * from tb_usuario where tb_usuario.nome LIKE %?1%", nativeQuery = true)
     List<Usuario> buscarUsuarioPorNome(String nome);
-
-    Optional<Usuario> findByEmail(String email);
-
-
 
 }
