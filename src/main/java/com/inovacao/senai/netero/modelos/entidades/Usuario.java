@@ -1,19 +1,24 @@
 package com.inovacao.senai.netero.modelos.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "tb_usuario")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+
 public class Usuario implements Serializable, UserDetails {
 
     @Id
@@ -34,40 +39,48 @@ public class Usuario implements Serializable, UserDetails {
 
     private String rg;
 
-    private boolean ativo = true;
+    @ManyToMany
+    @JoinTable(name = "tb_usuario_role",
+    joinColumns = @JoinColumn(name = "usuario_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> authorities;
+
+    public Usuario(String username, String password, boolean b, boolean b1, boolean b2, boolean b3, Collection<? extends GrantedAuthority> authorities) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.senha;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

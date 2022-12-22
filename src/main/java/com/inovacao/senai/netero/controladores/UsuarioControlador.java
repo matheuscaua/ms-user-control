@@ -4,6 +4,7 @@ import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,8 @@ public class UsuarioControlador {
         usuarioServico.cadastrar(usuarioDTO);
         return ResponseEntity.status(201).build();
     }
+
+
     @GetMapping("/{nome}")
     public ResponseEntity buscarNome(@PathVariable  String nome) {
         return ResponseEntity.status(200).body(usuarioServico.buscarNome(nome));

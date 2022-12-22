@@ -26,11 +26,7 @@ public class UsuarioServico {
     }
 
     public List<Usuario> buscarNome(String nome) {
-        List<Usuario> usuarios = usuarioRepositorio.buscarUsuarioPorNome(nome);
-
-        List<Usuario> matheus = usuarios.stream().filter(u -> u.getNome().equals("Matheus")).collect(Collectors.toList());
-
-        return matheus;
+        return usuarioRepositorio.buscarUsuarioPorNome(nome);
     }
 
     public List<Usuario> buscarTodos() {
