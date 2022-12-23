@@ -15,7 +15,7 @@ public class Telefone {
     private String numero;
 
     @JsonIgnore
-    @org.hibernate.annotations.ForeignKey(name = "usuario_id")
+    @org.hibernate.annotations.ForeignKey(name = "id_usuario")
     @ManyToOne
     private Usuario usuario;
 

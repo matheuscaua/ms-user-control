@@ -2,6 +2,7 @@ package com.inovacao.senai.netero.controladores;
 
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +33,12 @@ public class UsuarioControlador {
         return ResponseEntity.status(200).body(usuarioServico.buscarTodos());
     }
 
+
+    @DeleteMapping("/{cpf}/{email}")
+    public ResponseEntity deletarUsuario(@PathVariable String cpf, @PathVariable String email){
+        usuarioServico.deletar(cpf, email);
+        return ResponseEntity.status(200).build();
+    }
 }
 
 

@@ -22,17 +22,23 @@ public class UsuarioServico {
     private UsuarioRepositorio usuarioRepositorio;
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
+        //Criptografa a senha
         usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
+
         Usuario usuarioEntidade = new Usuario();
+        //Copia as propriedades do DTO para a Entidade
         BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
 
+        //Seta usuario na Entidade Endereco
         var endereco = usuarioDTO.getEndereco();
         endereco.setUsuario(usuarioEntidade);
 
+        //Seta usuario na Entidade Telefone
         for (Telefone telefone : usuarioDTO.getTelefones()){
             telefone.setUsuario(usuarioEntidade);
         }
         usuarioRepositorio.save(usuarioEntidade);
+
     }
 
     public List<Usuario> buscarNome(String nome) {
@@ -43,8 +49,10 @@ public class UsuarioServico {
         return usuarioRepositorio.findAll();
     }
 
-
-
-
-
+    public void deletar(String cpf, String email){
+        var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
+        if(email.equals(usuario.getEmail())){
+            usuarioRepositorio.deleteById(usuario.getId());
+        }
+    }
 }

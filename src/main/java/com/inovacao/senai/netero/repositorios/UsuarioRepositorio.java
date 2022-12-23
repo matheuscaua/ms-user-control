@@ -15,4 +15,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     @Query(value = "select * from tb_usuario where tb_usuario.nome LIKE %?1%", nativeQuery = true)
     List<Usuario> buscarUsuarioPorNome(String nome);
 
+    @Query(value = "select * from tb_usuario where tb_usuario.cpf = ?1", nativeQuery = true)
+    Usuario buscarUsuarioPorCpf(String cpf);
+
 }
