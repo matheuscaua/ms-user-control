@@ -1,11 +1,12 @@
 package com.inovacao.senai.netero.modelos.entidades;
 
 import com.inovacao.senai.netero.enums.RoleEnum;
-import jakarta.persistence.*;
+
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "tb_role")

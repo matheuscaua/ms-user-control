@@ -1,11 +1,11 @@
 package com.inovacao.senai.netero.modelos.dto;
 
 import com.inovacao.senai.netero.modelos.entidades.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data
