@@ -1,13 +1,13 @@
 package com.inovacao.senai.netero.modelos.dto;
 
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
-import com.inovacao.senai.netero.modelos.entidades.Role;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,9 +22,6 @@ public class UsuarioDTO {
     @NotEmpty(message = "Sobrenome obrigatório...")
     private String sobrenome;
 
-    @NotEmpty(message = "telefone obrigatório...")
-    private String telefone;
-
     @Email(message = "Email inválido...")
     @NotEmpty(message = "Email obrigatório...")
     private String email;
@@ -35,6 +32,8 @@ public class UsuarioDTO {
 
     @NotEmpty(message = "Rg obrigatório...")
     private String rg;
+
+    private List<Telefone> telefones = new ArrayList<>();
 
     private Endereco endereco;
 

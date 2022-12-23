@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 
-public class Usuario implements Serializable, UserDetails {
+public class Usuario implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,62 +31,16 @@ public class Usuario implements Serializable, UserDetails {
 
     private String sobrenome;
 
-    private String telefone;
-
     private String email;
 
     private String cpf;
 
     private String rg;
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Telefone> telefones = new ArrayList<>(2);
-
-    @OneToOne
+    @OneToOne(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
     private Endereco endereco;
 
-    @ManyToMany
-    @JoinTable(name = "tb_usuario_role",
-    joinColumns = @JoinColumn(name = "usuario_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> authorities;
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Telefone> telefones = new ArrayList<>();
 
-    public Usuario(String username, String password, boolean b, boolean b1, boolean b2, boolean b3, Collection<? extends GrantedAuthority> authorities) {
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

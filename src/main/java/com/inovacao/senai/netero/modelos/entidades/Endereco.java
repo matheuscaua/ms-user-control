@@ -2,11 +2,13 @@ package com.inovacao.senai.netero.modelos.entidades;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable {
@@ -23,6 +25,7 @@ public class Endereco implements Serializable {
     private String uf;
 
     @JsonIgnore
+    @org.hibernate.annotations.ForeignKey(name = "usuario_id")
     @OneToOne
     private Usuario usuario;
 }

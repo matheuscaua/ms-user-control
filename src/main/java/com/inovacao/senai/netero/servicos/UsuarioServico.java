@@ -2,6 +2,8 @@ package com.inovacao.senai.netero.servicos;
 
 
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import org.springframework.beans.BeanUtils;
@@ -9,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 @Service
 public class UsuarioServico {
 
@@ -21,6 +25,13 @@ public class UsuarioServico {
         usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
         Usuario usuarioEntidade = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
+
+        var endereco = usuarioDTO.getEndereco();
+        endereco.setUsuario(usuarioEntidade);
+
+        for (Telefone telefone : usuarioDTO.getTelefones()){
+            telefone.setUsuario(usuarioEntidade);
+        }
         usuarioRepositorio.save(usuarioEntidade);
     }
 
