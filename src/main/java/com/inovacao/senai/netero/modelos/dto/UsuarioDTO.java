@@ -1,9 +1,11 @@
 package com.inovacao.senai.netero.modelos.dto;
 
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -34,6 +36,6 @@ public class UsuarioDTO {
     @NotEmpty(message = "Rg obrigatório...")
     private String rg;
 
-    private List<Role> authorities;
+    private Endereco endereco;
 
 }

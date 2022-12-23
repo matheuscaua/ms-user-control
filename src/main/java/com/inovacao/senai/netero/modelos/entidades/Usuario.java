@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class Usuario implements Serializable, UserDetails {
     private String cpf;
 
     private String rg;
+
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Telefone> telefones = new ArrayList<>(2);
+
+    @OneToOne
+    private Endereco endereco;
 
     @ManyToMany
     @JoinTable(name = "tb_usuario_role",
