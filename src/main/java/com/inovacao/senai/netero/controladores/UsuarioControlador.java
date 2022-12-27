@@ -1,11 +1,10 @@
 package com.inovacao.senai.netero.controladores;
 
-import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.servicos.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
-import org.apache.coyote.Response;
+import com.inovacao.senai.netero.servicos.ViaCepServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +14,10 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServico usuarioServico;
+
+    @Autowired
+    private ViaCepServico viaCepServico;
+
 
     @PostMapping("/cadastrar")
     public ResponseEntity cadastrar(@RequestBody @Validated UsuarioDTO usuarioDTO) {
@@ -38,6 +41,10 @@ public class UsuarioControlador {
     public ResponseEntity deletarUsuario(@PathVariable String cpf, @PathVariable String email){
         usuarioServico.deletar(cpf, email);
         return ResponseEntity.status(200).build();
+    }
+    @GetMapping("/viacep/{cep}")
+    public ResponseEntity buscarTodos(@PathVariable String cep) {
+        return ResponseEntity.status(200).body(viaCepServico.buscarDadosViaCep(cep));
     }
 }
 

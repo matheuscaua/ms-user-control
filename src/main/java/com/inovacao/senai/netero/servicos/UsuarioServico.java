@@ -1,10 +1,9 @@
 package com.inovacao.senai.netero.servicos;
 
 
-import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
-import com.inovacao.senai.netero.modelos.entidades.Endereco;
-import com.inovacao.senai.netero.modelos.entidades.Telefone;
-import com.inovacao.senai.netero.modelos.entidades.Usuario;
+import com.inovacao.senai.netero.servicos.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.servicos.modelos.entidades.Telefone;
+import com.inovacao.senai.netero.servicos.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

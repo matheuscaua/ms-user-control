@@ -1,16 +1,13 @@
-package com.inovacao.senai.netero.modelos.entidades;
+package com.inovacao.senai.netero.servicos.modelos.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "tb_usuario")

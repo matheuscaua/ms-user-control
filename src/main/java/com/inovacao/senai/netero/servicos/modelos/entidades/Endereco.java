@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.modelos.entidades;
+package com.inovacao.senai.netero.servicos.modelos.entidades;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,7 +6,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Entity
