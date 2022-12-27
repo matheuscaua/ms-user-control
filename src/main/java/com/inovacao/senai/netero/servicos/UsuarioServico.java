@@ -1,10 +1,12 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import com.inovacao.senai.netero.servicos.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.servicos.modelos.dto.ViaCepDTO;
+import com.inovacao.senai.netero.servicos.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.servicos.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.servicos.modelos.entidades.Usuario;
-import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,22 +22,25 @@ public class UsuarioServico {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+    @Autowired
+    private ViaCepServico viaCepServico;
+
     public void cadastrar(UsuarioDTO usuarioDTO) {
-        //Criptografa a senha
+        Usuario usuarioEntidade = new Usuario();
         usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
 
-        Usuario usuarioEntidade = new Usuario();
-        //Copia as propriedades do DTO para a Entidade
-        BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
-
-        //Seta usuario na Entidade Endereco
         var endereco = usuarioDTO.getEndereco();
+
+        var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
         endereco.setUsuario(usuarioEntidade);
 
-        //Seta usuario na Entidade Telefone
         for (Telefone telefone : usuarioDTO.getTelefones()){
             telefone.setUsuario(usuarioEntidade);
         }
+        BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
+
+        adequarEndereco(dadosViaCep, endereco);
+
         usuarioRepositorio.save(usuarioEntidade);
 
     }
@@ -52,6 +57,23 @@ public class UsuarioServico {
         var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
         if(email.equals(usuario.getEmail())){
             usuarioRepositorio.deleteById(usuario.getId());
+        }
+    }
+
+    public void adequarEndereco(ViaCepDTO viaCepDTO, Endereco endereco){
+        if(viaCepDTO != null  && viaCepDTO.getLogradouro() != null){
+            if(!endereco.getBairro().equals(viaCepDTO.getBairro()) || endereco.getBairro().isEmpty()){
+                endereco.setBairro(viaCepDTO.getBairro());
+            }
+            if(!endereco.getLogradouro().equals(viaCepDTO.getLogradouro())){
+                endereco.setLogradouro(viaCepDTO.getLogradouro());
+            }
+            if(!endereco.getLocalidade().equals(viaCepDTO.getLocalidade())){
+                endereco.setLocalidade(viaCepDTO.getLocalidade());
+            }
+            if(!endereco.getUf().equals(viaCepDTO.getUf())){
+                endereco.setUf(viaCepDTO.getUf());
+            }
         }
     }
 }

@@ -3,10 +3,12 @@ package com.inovacao.senai.netero.servicos.modelos.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ViaCepDTO {
     private String cep;
     private String logradouro;

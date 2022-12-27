@@ -3,6 +3,7 @@ package com.inovacao.senai.netero.servicos.modelos.dto;
 import com.inovacao.senai.netero.servicos.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.servicos.modelos.entidades.Telefone;
 import lombok.Data;
+import lombok.NonNull;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
@@ -33,6 +34,7 @@ public class UsuarioDTO {
     @NotEmpty(message = "Rg obrigatório...")
     private String rg;
 
+    @NonNull
     private List<Telefone> telefones = new ArrayList<>();
 
     private Endereco endereco;

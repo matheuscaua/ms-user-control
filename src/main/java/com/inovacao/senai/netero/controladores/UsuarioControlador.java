@@ -25,25 +25,25 @@ public class UsuarioControlador {
         return ResponseEntity.status(201).build();
     }
 
-
-    @GetMapping("/{nome}")
-    public ResponseEntity buscarNome(@PathVariable  String nome) {
-        return ResponseEntity.status(200).body(usuarioServico.buscarNome(nome));
-    }
-
-    @GetMapping("/buscarTodos")
+    @GetMapping("/")
     public ResponseEntity buscarTodos() {
         return ResponseEntity.status(200).body(usuarioServico.buscarTodos());
     }
 
+
+    @GetMapping("/{nome}")
+    public ResponseEntity buscarPorNome(@PathVariable  String nome) {
+        return ResponseEntity.status(200).body(usuarioServico.buscarNome(nome));
+    }
 
     @DeleteMapping("/{cpf}/{email}")
     public ResponseEntity deletarUsuario(@PathVariable String cpf, @PathVariable String email){
         usuarioServico.deletar(cpf, email);
         return ResponseEntity.status(200).build();
     }
+
     @GetMapping("/viacep/{cep}")
-    public ResponseEntity buscarTodos(@PathVariable String cep) {
+    public ResponseEntity testeViaCep(@PathVariable String cep) {
         return ResponseEntity.status(200).body(viaCepServico.buscarDadosViaCep(cep));
     }
 }

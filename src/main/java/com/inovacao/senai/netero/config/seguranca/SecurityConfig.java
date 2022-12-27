@@ -2,6 +2,7 @@ package com.inovacao.senai.netero.config.seguranca;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,6 +16,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .anyRequest().permitAll();
+                .antMatchers(HttpMethod.DELETE, "usuario/deletar").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "usuario/buscarTodos").permitAll();
+        //Configurar outros end points
     }
 }
