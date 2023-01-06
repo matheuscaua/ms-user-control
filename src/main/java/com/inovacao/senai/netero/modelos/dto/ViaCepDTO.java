@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.servicos.modelos.dto;
+package com.inovacao.senai.netero.modelos.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

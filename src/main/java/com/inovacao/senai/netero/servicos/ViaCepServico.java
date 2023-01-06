@@ -2,7 +2,7 @@ package com.inovacao.senai.netero.servicos;
 
 
 import com.inovacao.senai.netero.client.ViaCepClient;
-import com.inovacao.senai.netero.servicos.modelos.dto.ViaCepDTO;
+import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

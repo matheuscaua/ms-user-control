@@ -1,6 +1,6 @@
 package com.inovacao.senai.netero.controladores;
 
-import com.inovacao.senai.netero.servicos.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import com.inovacao.senai.netero.servicos.ViaCepServico;
 import org.springframework.beans.factory.annotation.Autowired;

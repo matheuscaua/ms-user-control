@@ -2,15 +2,16 @@ package com.inovacao.senai.netero.servicos;
 
 
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
-import com.inovacao.senai.netero.servicos.modelos.dto.UsuarioDTO;
-import com.inovacao.senai.netero.servicos.modelos.dto.ViaCepDTO;
-import com.inovacao.senai.netero.servicos.modelos.entidades.Endereco;
-import com.inovacao.senai.netero.servicos.modelos.entidades.Telefone;
-import com.inovacao.senai.netero.servicos.modelos.entidades.Usuario;
+import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
+import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import javax.transaction.Transactional;
 import java.util.List;

@@ -1,10 +1,12 @@
-package com.inovacao.senai.netero.servicos.modelos.dto;
+package com.inovacao.senai.netero.modelos.dto;
 
-import com.inovacao.senai.netero.servicos.modelos.entidades.Endereco;
-import com.inovacao.senai.netero.servicos.modelos.entidades.Telefone;
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
+
 import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.br.CPF;
+
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
