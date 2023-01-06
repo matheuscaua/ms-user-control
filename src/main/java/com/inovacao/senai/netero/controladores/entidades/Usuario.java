@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.modelos.entidades;
+package com.inovacao.senai.netero.controladores.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
