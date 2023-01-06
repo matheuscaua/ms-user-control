@@ -2,6 +2,7 @@ package com.inovacao.senai.netero.modelos.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.inovacao.senai.netero.controladores.entidades.Usuario;
 import lombok.Data;
 
 import javax.persistence.*;

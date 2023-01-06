@@ -1,5 +1,7 @@
-package com.inovacao.senai.netero.modelos.entidades;
+package com.inovacao.senai.netero.controladores.entidades;
 
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
