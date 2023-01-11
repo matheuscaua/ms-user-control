@@ -1,7 +1,7 @@
 package com.inovacao.senai.netero.servicos;
 
 
-import com.inovacao.senai.netero.controladores.entidades.Usuario;
+import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
@@ -9,12 +9,15 @@ import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -29,12 +32,9 @@ public class UsuarioServico {
     public void cadastrar(UsuarioDTO usuarioDTO) {
         Usuario usuarioEntidade = new Usuario();
         usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
-
         var endereco = usuarioDTO.getEndereco();
-
         var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
         endereco.setUsuario(usuarioEntidade);
-
         for (Telefone telefone : usuarioDTO.getTelefones()){
             telefone.setUsuario(usuarioEntidade);
         }
@@ -44,14 +44,22 @@ public class UsuarioServico {
 
         usuarioRepositorio.save(usuarioEntidade);
 
+
     }
 
     public List<Usuario> buscarNome(String nome) {
         return usuarioRepositorio.buscarUsuarioPorNome(nome);
     }
 
-    public List<Usuario> buscarTodos() {
-        return usuarioRepositorio.findAll();
+    public List<UsuarioDTO> buscarTodos() {
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        List<UsuarioDTO> usuarioDTOS = usuarios.stream().map(usuario -> {
+            BeanUtils.copyProperties(usuario,usuarioDTO);
+            return usuarioDTO;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+
+        return usuarioDTOS;
     }
 
     public void deletar(String cpf, String email){
