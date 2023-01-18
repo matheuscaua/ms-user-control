@@ -1,6 +1,7 @@
 package com.inovacao.senai.netero.modelos.dto;
 
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
+import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 
 import lombok.Data;
@@ -39,6 +40,9 @@ public class UsuarioDTO {
     @NonNull
     private List<Telefone> telefones = new ArrayList<>();
 
+
     private Endereco endereco;
+
+    private List<Role> roles;
 
 }
