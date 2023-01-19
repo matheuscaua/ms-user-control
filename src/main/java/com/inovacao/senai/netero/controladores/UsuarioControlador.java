@@ -27,7 +27,12 @@ import org.springframework.web.bind.annotation.*;
 
         @GetMapping("/")
         public ResponseEntity buscarTodos() {
-            return ResponseEntity.status(200).body(usuarioServico.buscarTodos());
+            try {
+                return ResponseEntity.status(200).body(usuarioServico.buscarTodos());
+            }catch(NullPointerException e){
+                e.getMessage();
+                return ResponseEntity.status(204).build();
+            }
         }
 
 

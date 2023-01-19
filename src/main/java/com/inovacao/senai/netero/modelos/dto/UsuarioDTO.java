@@ -1,5 +1,6 @@
 package com.inovacao.senai.netero.modelos.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
@@ -40,9 +41,9 @@ public class UsuarioDTO {
     @NonNull
     private List<Telefone> telefones = new ArrayList<>();
 
-
     private Endereco endereco;
 
+    @JsonIgnore
     private List<Role> roles;
 
 }

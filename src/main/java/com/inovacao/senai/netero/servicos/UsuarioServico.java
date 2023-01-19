@@ -32,20 +32,19 @@ public class UsuarioServico {
     private ViaCepServico viaCepServico;
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
-
-        Usuario usuarioEntidade = new Usuario();
-        usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
-        var endereco = usuarioDTO.getEndereco();
-        var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
-        endereco.setUsuario(usuarioEntidade);
-
-        for (Telefone telefone : usuarioDTO.getTelefones()){
-            telefone.setUsuario(usuarioEntidade);
+        if(usuarioDTO != null) {
+            Usuario usuarioEntidade = new Usuario();
+            usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
+            var endereco = usuarioDTO.getEndereco();
+            var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
+            endereco.setUsuario(usuarioEntidade);
+            for (Telefone telefone : usuarioDTO.getTelefones()) {
+                telefone.setUsuario(usuarioEntidade);
+            }
+            BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
+            adequarEndereco(dadosViaCep, endereco);
+            usuarioRepositorio.save(usuarioEntidade);
         }
-        BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
-        adequarEndereco(dadosViaCep, endereco);
-        usuarioRepositorio.save(usuarioEntidade);
-
     }
 
     public List<Usuario> buscarNome(String nome) {
@@ -64,14 +63,20 @@ public class UsuarioServico {
     }
 
     public List<Usuario> buscarTodos() {
-        return usuarioRepositorio.findAll();
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        if(!usuarios.isEmpty()){
+            return usuarios;
+        }
+        throw new NullPointerException();
     }
 
 
     public void deletar(String cpf, String email){
         var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
-        if(email.equals(usuario.getEmail())){
-            usuarioRepositorio.deleteById(usuario.getId());
+        if(usuario != null) {
+            if (email.equals(usuario.getEmail())) {
+                usuarioRepositorio.deleteById(usuario.getId());
+            }
         }
     }
 
