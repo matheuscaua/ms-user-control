@@ -1,11 +1,6 @@
 server:
   port: 8080
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
 spring:
   application:
     name: ms-controle-usuario
@@ -15,6 +10,19 @@ spring:
     username: root
     password: root
   jpa:
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: true
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+

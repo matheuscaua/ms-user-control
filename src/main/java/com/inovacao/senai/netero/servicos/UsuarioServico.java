@@ -48,7 +48,11 @@ public class UsuarioServico {
     }
 
     public List<Usuario> buscarNome(String nome) {
-        return usuarioRepositorio.buscarUsuarioPorNome(nome);
+        List<Usuario> usuarios = usuarioRepositorio.buscarUsuarioPorNome(nome);
+        if(usuarios != null && !usuarios.isEmpty()){
+            return usuarios;
+        }
+        throw new NullPointerException();
     }
 
     public List<UsuarioDTO> buscarTodosDTO() {
@@ -58,7 +62,6 @@ public class UsuarioServico {
             BeanUtils.copyProperties(usuario,usuarioDTO);
             return usuarioDTO;
         }).filter(Objects::nonNull).collect(Collectors.toList());
-
         return usuarioDTOS;
     }
 

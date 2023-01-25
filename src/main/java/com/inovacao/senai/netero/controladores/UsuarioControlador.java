@@ -3,13 +3,14 @@ package com.inovacao.senai.netero.controladores;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import com.inovacao.senai.netero.servicos.ViaCepServico;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
     @RestController
-    @RequestMapping("/usuario")
+    @RequestMapping("usuario")
     public class UsuarioControlador {
 
         @Autowired
@@ -34,11 +35,15 @@ import org.springframework.web.bind.annotation.*;
                 return ResponseEntity.status(204).build();
             }
         }
-
-
+        
         @GetMapping("/{nome}")
         public ResponseEntity buscarPorNome(@PathVariable String nome) {
-            return ResponseEntity.status(200).body(usuarioServico.buscarNome(nome));
+            try {
+                return ResponseEntity.status(200).body(usuarioServico.buscarNome(nome));
+            }catch (NullPointerException e){
+                e.getMessage();
+                return ResponseEntity.status(204).build();
+            }
         }
 
         @DeleteMapping("/{cpf}/{email}")
