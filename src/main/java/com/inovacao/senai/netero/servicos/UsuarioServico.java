@@ -81,6 +81,7 @@ public class UsuarioServico {
                 usuarioRepositorio.deleteById(usuario.getId());
             }
         }
+        throw new NullPointerException();
     }
 
     public void adequarEndereco(ViaCepDTO viaCepDTO, Endereco endereco){

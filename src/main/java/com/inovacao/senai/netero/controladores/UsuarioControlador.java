@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
                 return ResponseEntity.status(204).build();
             }
         }
-        
+
         @GetMapping("/{nome}")
         public ResponseEntity buscarPorNome(@PathVariable String nome) {
             try {
@@ -48,8 +48,12 @@ import org.springframework.web.bind.annotation.*;
 
         @DeleteMapping("/{cpf}/{email}")
         public ResponseEntity deletarUsuario(@PathVariable String cpf, @PathVariable String email){
-            usuarioServico.deletar(cpf, email);
-            return ResponseEntity.status(200).build();
+            try {
+                usuarioServico.deletar(cpf, email);
+                return ResponseEntity.status(200).build();
+            }catch(NullPointerException e){
+                return ResponseEntity.status(204).build();
+            }
         }
 
         @GetMapping("/viacep/{cep}")
