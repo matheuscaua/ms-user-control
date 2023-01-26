@@ -1,7 +1,9 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.enums.ParametroEnum;
 import com.inovacao.senai.netero.enums.RoleEnum;
+import com.inovacao.senai.netero.modelos.dto.ViaCepUriDTO;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.ParametroRepositorio;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -35,9 +39,12 @@ public class UsuarioServico {
     @Autowired
     private ParametroRepositorio parametroRepositorio;
 
+    private ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
 
-    private void settup(){
-        
+    private void settup() throws URISyntaxException {
+        var parametro = parametroRepositorio.findParametroByNomeParametro(ParametroEnum.VIACEP_BASE_URI);
+        URI baseUri = new URI(parametro.getValorParametro());
+        viaCepUriDTO.setUri(baseUri);
     }
 
 
