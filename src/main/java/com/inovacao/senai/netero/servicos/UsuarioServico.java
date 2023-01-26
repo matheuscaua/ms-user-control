@@ -36,6 +36,9 @@ public class UsuarioServico {
     private ParametroRepositorio parametroRepositorio;
 
 
+    private void settup(){
+        
+    }
 
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
