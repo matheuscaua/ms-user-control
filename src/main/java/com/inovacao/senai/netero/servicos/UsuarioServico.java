@@ -4,6 +4,7 @@ package com.inovacao.senai.netero.servicos;
 import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
+import com.inovacao.senai.netero.repositorios.ParametroRepositorio;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
@@ -30,6 +31,12 @@ public class UsuarioServico {
 
     @Autowired
     private ViaCepServico viaCepServico;
+
+    @Autowired
+    private ParametroRepositorio parametroRepositorio;
+
+
+
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
         if(usuarioDTO != null) {
