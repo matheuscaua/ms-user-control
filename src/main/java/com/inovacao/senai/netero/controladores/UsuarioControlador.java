@@ -1,6 +1,9 @@
 package com.inovacao.senai.netero.controladores;
 
+import com.inovacao.senai.netero.enums.ParametroEnum;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
+import com.inovacao.senai.netero.modelos.dto.ViaCepUriDTO;
+import com.inovacao.senai.netero.repositorios.ParametroRepositorio;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import com.inovacao.senai.netero.servicos.ViaCepServico;
 import org.apache.coyote.Response;
@@ -9,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-    @RestController
+import java.net.URI;
+import java.net.URISyntaxException;
+
+@RestController
     @RequestMapping("usuario")
     public class UsuarioControlador {
 
@@ -19,6 +25,10 @@ import org.springframework.web.bind.annotation.*;
         @Autowired
         private ViaCepServico viaCepServico;
 
+        @Autowired
+        private ParametroRepositorio parametroRepositorio;
+
+        private final ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
 
         @PostMapping("/cadastrar")
         public ResponseEntity cadastrar(@RequestBody @Validated UsuarioDTO usuarioDTO) {
@@ -56,8 +66,4 @@ import org.springframework.web.bind.annotation.*;
             }
         }
 
-        @GetMapping("/viacep/{cep}")
-        public ResponseEntity testeViaCep(@PathVariable String cep) {
-            return ResponseEntity.status(200).body(viaCepServico.buscarDadosViaCep(cep));
-        }
 }

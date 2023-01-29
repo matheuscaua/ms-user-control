@@ -43,7 +43,6 @@ public class UsuarioDTO {
 
     private Endereco endereco;
 
-    @JsonIgnore
     private List<Role> roles;
 
 }

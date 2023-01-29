@@ -39,9 +39,9 @@ public class UsuarioServico {
     @Autowired
     private ParametroRepositorio parametroRepositorio;
 
-    private ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
+    private final ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
 
-    private void settup() throws URISyntaxException {
+    private void uri() throws URISyntaxException {
         var parametro = parametroRepositorio.findParametroByNomeParametro(ParametroEnum.VIACEP_BASE_URI);
         URI baseUri = new URI(parametro.getValorParametro());
         viaCepUriDTO.setUri(baseUri);
@@ -49,18 +49,23 @@ public class UsuarioServico {
 
 
     public void cadastrar(UsuarioDTO usuarioDTO) {
-        if(usuarioDTO != null) {
-            Usuario usuarioEntidade = new Usuario();
-            usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
-            var endereco = usuarioDTO.getEndereco();
-            var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
-            endereco.setUsuario(usuarioEntidade);
-            for (Telefone telefone : usuarioDTO.getTelefones()) {
-                telefone.setUsuario(usuarioEntidade);
+        try {
+            uri();
+            if (usuarioDTO != null) {
+                Usuario usuarioEntidade = new Usuario();
+                usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
+                var endereco = usuarioDTO.getEndereco();
+                var dadosViaCep = viaCepServico.buscarDadosViaCep(viaCepUriDTO.getUri(), endereco.getCep());
+                endereco.setUsuario(usuarioEntidade);
+                for (Telefone telefone : usuarioDTO.getTelefones()) {
+                    telefone.setUsuario(usuarioEntidade);
+                }
+                BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
+                adequarEndereco(dadosViaCep, endereco);
+                usuarioRepositorio.save(usuarioEntidade);
             }
-            BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
-            adequarEndereco(dadosViaCep, endereco);
-            usuarioRepositorio.save(usuarioEntidade);
+        }catch (Exception e){
+            e.getMessage();
         }
     }
 
