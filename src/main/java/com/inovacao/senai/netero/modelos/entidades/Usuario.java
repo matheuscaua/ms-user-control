@@ -31,10 +31,12 @@ public class Usuario implements Serializable, UserDetails {
 
     private String sobrenome;
 
+    @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String cpf;
-
+    @Column(unique = true)
     private String rg;
 
     @OneToOne(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
