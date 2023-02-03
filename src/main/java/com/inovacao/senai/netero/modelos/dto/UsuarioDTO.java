@@ -5,13 +5,12 @@ import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.br.CPF;
 
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +42,5 @@ public class UsuarioDTO {
 
     private Endereco endereco;
 
-    private List<Role> roles;
 
 }

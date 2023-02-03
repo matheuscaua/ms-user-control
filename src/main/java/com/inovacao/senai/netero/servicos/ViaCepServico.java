@@ -6,8 +6,6 @@ import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
-
 @Service
 public class ViaCepServico {
 
@@ -15,7 +13,7 @@ public class ViaCepServico {
     private ViaCepClient viaCepClient;
 
 
-    public ViaCepDTO buscarDadosViaCep(URI baseUri, String cep){
-        return viaCepClient.buscarDadosViaCep(baseUri,cep);
+    public ViaCepDTO buscarDadosViaCep(String cep){
+        return viaCepClient.buscarDadosViaCep(cep);
     }
 }

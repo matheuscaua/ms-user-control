@@ -1,19 +1,17 @@
 server:
   port: 8080
-
 spring:
   application:
     name: ms-controle-usuario
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ms-controle-usuarios
+    url: jdbc:mysql://localhost:3306/controle
     username: root
     password: root
   jpa:
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true
-
 eureka:
   client:
     service-url:

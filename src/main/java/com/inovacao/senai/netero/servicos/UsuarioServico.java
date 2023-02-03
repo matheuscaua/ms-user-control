@@ -1,32 +1,26 @@
 package com.inovacao.senai.netero.servicos;
 
 
-import com.inovacao.senai.netero.enums.ParametroEnum;
-import com.inovacao.senai.netero.enums.RoleEnum;
-import com.inovacao.senai.netero.modelos.dto.ViaCepUriDTO;
-import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
-import com.inovacao.senai.netero.repositorios.ParametroRepositorio;
+import com.inovacao.senai.netero.repositorios.RoleRepositorio;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
+import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
-import com.inovacao.senai.netero.modelos.entidades.Telefone;
+import com.inovacao.senai.netero.modelos.entidades.Role;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import javax.transaction.Transactional;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Transactional
+
 @Service
 public class UsuarioServico {
 
@@ -37,35 +31,28 @@ public class UsuarioServico {
     private ViaCepServico viaCepServico;
 
     @Autowired
-    private ParametroRepositorio parametroRepositorio;
-
-    private final ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
-
-    private void uri() throws URISyntaxException {
-        var parametro = parametroRepositorio.findParametroByNomeParametro(ParametroEnum.VIACEP_BASE_URI);
-        URI baseUri = new URI(parametro.getValorParametro());
-        viaCepUriDTO.setUri(baseUri);
-    }
-
-
-    public void cadastrar(UsuarioDTO usuarioDTO) {
+    private RoleRepositorio roleRepositorio;
+    
+    
+    public void cadastrar(UsuarioDTO usuarioDTO) throws Exception {
         try {
-            uri();
             if (usuarioDTO != null) {
                 Usuario usuarioEntidade = new Usuario();
                 usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
                 var endereco = usuarioDTO.getEndereco();
-                var dadosViaCep = viaCepServico.buscarDadosViaCep(viaCepUriDTO.getUri(), endereco.getCep());
-                endereco.setUsuario(usuarioEntidade);
-                for (Telefone telefone : usuarioDTO.getTelefones()) {
-                    telefone.setUsuario(usuarioEntidade);
-                }
+                var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
+                	
                 BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
+                
+                Role roles = roleRepositorio.findByIdentificador(RoleEnum.ADMIN);
+                usuarioEntidade.setRoles(Collections.singletonList(roles));
+                
                 adequarEndereco(dadosViaCep, endereco);
                 usuarioRepositorio.save(usuarioEntidade);
             }
         }catch (Exception e){
             e.getMessage();
+            throw new Exception();
         }
     }
 
