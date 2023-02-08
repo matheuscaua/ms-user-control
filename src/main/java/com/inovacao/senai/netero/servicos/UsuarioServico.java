@@ -1,17 +1,18 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
-import com.inovacao.senai.netero.repositorios.RoleRepositorio;
-import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
+import com.inovacao.senai.netero.servicos.repositorios.RoleRepositorio;
+import com.inovacao.senai.netero.servicos.repositorios.UsuarioRepositorio;
 import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
-import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
-import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 
+import com.inovacao.senai.netero.servicos.component.UsuarioValidadorComponente;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,40 +21,34 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
 @Service
 public class UsuarioServico {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-
-    @Autowired
-    private ViaCepServico viaCepServico;
-
+    
     @Autowired
     private RoleRepositorio roleRepositorio;
     
+    private UsuarioValidadorComponente usuarioValidadorComponente = new UsuarioValidadorComponente();
     
-    public void cadastrar(UsuarioDTO usuarioDTO) throws Exception {
-        try {
-            if (usuarioDTO != null) {
-                Usuario usuarioEntidade = new Usuario();
-                usuarioDTO.setSenha(new BCryptPasswordEncoder().encode(usuarioDTO.getSenha()));
-                var endereco = usuarioDTO.getEndereco();
-                var dadosViaCep = viaCepServico.buscarDadosViaCep(endereco.getCep());
-                	
-                BeanUtils.copyProperties(usuarioDTO, usuarioEntidade);
-                
-                Role roles = roleRepositorio.findByIdentificador(RoleEnum.ADMIN);
-                usuarioEntidade.setRoles(Collections.singletonList(roles));
-                
-                adequarEndereco(dadosViaCep, endereco);
-                usuarioRepositorio.save(usuarioEntidade);
-            }
-        }catch (Exception e){
-            e.getMessage();
-            throw new Exception();
+    public void cadastrar(Usuario usuario){
+        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+        var endereco = usuario.getEndereco();
+    
+        if(usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)){
+            usuarioValidadorComponente.adequarEndereco(endereco);
         }
+
+        for(Telefone telefone: usuario.getTelefones()){
+            telefone.setUsuario(usuario);
+        }
+        endereco.setUsuario(usuario);
+
+        Role roles = roleRepositorio.findByIdentificador(RoleEnum.CANDIDATO);
+        usuario.setRoles(Collections.singletonList(roles));
+
+        usuarioRepositorio.save(usuario);
     }
 
     public List<Usuario> buscarNome(String nome) {
@@ -82,7 +77,6 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-
     public void deletar(String cpf, String email){
         var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
         if(usuario != null) {
@@ -93,20 +87,13 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-    public void adequarEndereco(ViaCepDTO viaCepDTO, Endereco endereco){
-        if(viaCepDTO != null  && viaCepDTO.getLogradouro() != null){
-            if(!endereco.getBairro().equals(viaCepDTO.getBairro()) || endereco.getBairro().isEmpty()){
-                endereco.setBairro(viaCepDTO.getBairro());
-            }
-            if(!endereco.getLogradouro().equals(viaCepDTO.getLogradouro())){
-                endereco.setLogradouro(viaCepDTO.getLogradouro());
-            }
-            if(!endereco.getLocalidade().equals(viaCepDTO.getLocalidade())){
-                endereco.setLocalidade(viaCepDTO.getLocalidade());
-            }
-            if(!endereco.getUf().equals(viaCepDTO.getUf())){
-                endereco.setUf(viaCepDTO.getUf());
-            }
-        }
+    public UsuarioDTO buscarPorEmail(String email){
+        var usuario = usuarioRepositorio.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("Usuario não existe!")
+        );
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        BeanUtils.copyProperties(usuario,usuarioDTO);
+        return usuarioDTO;
     }
+
 }

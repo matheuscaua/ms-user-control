@@ -2,10 +2,12 @@ package com.inovacao.senai.netero.controladores;
 
 import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.dto.ViaCepUriDTO;
+import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import com.inovacao.senai.netero.servicos.ViaCepServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +24,13 @@ public class UsuarioControlador {
     private final ViaCepUriDTO viaCepUriDTO = new ViaCepUriDTO();
 
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody @Validated UsuarioDTO usuarioDTO) {
-
+    public ResponseEntity cadastrar(@RequestBody @Validated Usuario usuario) {
        try{
-           usuarioServico.cadastrar(usuarioDTO);
+           usuarioServico.cadastrar(usuario);
            return ResponseEntity.status(201).build();
        }catch (Exception e){
-           return ResponseEntity.status(400).body("ERRRRROOOOOOO");
+           return ResponseEntity.status(400).body("Erro ao cadastrar usuário!");
        }
-
     }
 
     @GetMapping("/")
@@ -62,6 +62,18 @@ public class UsuarioControlador {
             return ResponseEntity.status(204).build();
         }
     }
+
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UsuarioDTO> buscarPorEmail(@PathVariable String email){
+        try{
+            return ResponseEntity.status(200).body(usuarioServico.buscarPorEmail(email));
+        }catch (UsernameNotFoundException e){
+            return ResponseEntity.status(204).build();
+        }
+    }
+
+
 
 
 }

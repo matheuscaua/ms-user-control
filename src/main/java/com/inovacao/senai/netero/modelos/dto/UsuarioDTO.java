@@ -1,46 +1,31 @@
 package com.inovacao.senai.netero.modelos.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-import lombok.NonNull;
-import org.hibernate.validator.constraints.br.CPF;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class UsuarioDTO {
 
-    @NotEmpty(message = "Nome obrigatório...")
     private String nome;
 
-    @NotEmpty(message = "Senha obrigatória...")
     private String senha;
 
-    @NotEmpty(message = "Sobrenome obrigatório...")
     private String sobrenome;
 
-    @Email(message = "Email inválido...")
-    @NotEmpty(message = "Email obrigatório...")
     private String email;
 
-    @CPF(message = "Cpf inválido...")
-    @NotEmpty(message = "Cpf obrigatório...")
     private String cpf;
 
-    @NotEmpty(message = "Rg obrigatório...")
     private String rg;
 
-    @NonNull
-    private List<Telefone> telefones = new ArrayList<>();
+    private List<Telefone> telefones;
 
     private Endereco endereco;
 
+    private List<Role> roles;
 
 }
