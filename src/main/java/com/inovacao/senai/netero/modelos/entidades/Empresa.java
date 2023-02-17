@@ -27,6 +27,9 @@ public class Empresa {
     @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Telefone> telefones = new ArrayList<>();
+
+    /* TODO
+    *  Implement roles */
 }

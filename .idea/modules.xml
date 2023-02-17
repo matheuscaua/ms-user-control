@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ms-controle-usuario/ms-controle-usuario.iml" filepath="$PROJECT_DIR$/ms-controle-usuario/ms-controle-usuario.iml" />
       <module fileurl="file://$PROJECT_DIR$/ms-email/ms-email.iml" filepath="$PROJECT_DIR$/ms-email/ms-email.iml" />
     </modules>
   </component>

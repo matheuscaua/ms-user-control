@@ -2,7 +2,6 @@ package com.inovacao.senai.netero.modelos.entidades;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,7 +24,12 @@ public class Endereco implements Serializable {
     private String uf;
 
     @JsonIgnore
-    @org.hibernate.annotations.ForeignKey(name = "usuario_id")
+    @JoinColumn(name = "usuario_id")
     @OneToOne
     private Usuario usuario;
+
+    @JsonIgnore
+    @JoinColumn(name = "empresa_id")
+    @OneToOne
+    private Empresa empresa;
 }

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SENAI-Industria-4.0" />
+        <module name="ms-controle-usuario" />
         <module name="netero" />
       </profile>
     </annotationProcessing>
@@ -15,6 +16,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SENAI-Industria-4.0" options="-parameters" />
+      <module name="ms-controle-usuario" options="-parameters" />
       <module name="netero" options="-parameters" />
     </option>
   </component>

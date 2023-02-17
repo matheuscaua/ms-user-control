@@ -1,12 +1,9 @@
 package com.inovacao.senai.netero.servicos.repositorios;
 
-import com.inovacao.senai.netero.modelos.dto.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 import java.util.Optional;
