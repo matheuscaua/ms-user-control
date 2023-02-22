@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.modelos.dto;
+package com.inovacao.senai.netero.modelos.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.servicos.repositorios;
+package com.inovacao.senai.netero.repositorios;
 
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

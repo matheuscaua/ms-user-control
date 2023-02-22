@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-
-
-
 @Data
 @Entity
 @Table(name = "tb_role")

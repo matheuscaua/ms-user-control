@@ -3,6 +3,7 @@ package com.inovacao.senai.netero.modelos.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,7 +30,4 @@ public class Empresa {
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Telefone> telefones = new ArrayList<>();
-
-    /* TODO
-    *  Implement roles */
 }

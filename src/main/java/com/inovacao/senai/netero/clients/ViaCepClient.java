@@ -1,6 +1,6 @@
-package com.inovacao.senai.netero.client;
+package com.inovacao.senai.netero.clients;
 
-import com.inovacao.senai.netero.modelos.dto.ViaCepDTO;
+import com.inovacao.senai.netero.modelos.dtos.ViaCepDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

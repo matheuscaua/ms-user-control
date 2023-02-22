@@ -1,10 +1,11 @@
-package com.inovacao.senai.netero.modelos.dto;
+package com.inovacao.senai.netero.modelos.dtos;
 
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 
 import lombok.Data;
+
 import java.util.List;
 
 @Data
@@ -21,10 +22,6 @@ public class UsuarioDTO {
     private String cpf;
 
     private String rg;
-
-    private List<Telefone> telefones;
-
-    private Endereco endereco;
 
     private List<Role> roles;
 

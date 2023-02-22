@@ -1,15 +1,12 @@
 package com.inovacao.senai.netero.servicos;
 
-import com.inovacao.senai.netero.enums.RoleEnum;
-import com.inovacao.senai.netero.modelos.entidades.*;
-import com.inovacao.senai.netero.servicos.repositorios.EmpresaRepositorio;
-import com.inovacao.senai.netero.servicos.component.UsuarioValidadorComponente;
-import com.inovacao.senai.netero.servicos.repositorios.RoleRepositorio;
+import com.inovacao.senai.netero.componentes.ValidadorEndereco;
+import com.inovacao.senai.netero.modelos.entidades.Empresa;
+import com.inovacao.senai.netero.modelos.entidades.Telefone;
+import com.inovacao.senai.netero.repositorios.EmpresaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class EmpresaServico {
@@ -17,8 +14,7 @@ public class EmpresaServico {
     @Autowired
     private EmpresaRepositorio empresaRepositorio;
 
-    @Autowired
-    private UsuarioValidadorComponente usuarioValidadorComponente;
+    private ValidadorEndereco usuarioValidadorComponente;
 
 
     public void cadastrar(Empresa empresa) {
@@ -35,11 +31,10 @@ public class EmpresaServico {
         endereco.setEmpresa(empresa);
 
         /* TODO
-        *   Implement set roles empresa */
+         *   Implement set roles empresa */
 
         empresaRepositorio.save(empresa);
     }
-
 
 
 }

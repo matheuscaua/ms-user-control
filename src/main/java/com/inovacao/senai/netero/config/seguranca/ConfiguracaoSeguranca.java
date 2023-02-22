@@ -2,23 +2,22 @@ package com.inovacao.senai.netero.config.seguranca;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@Configuration
 public class ConfiguracaoSeguranca {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-       return http
-                .csrf().disable()
-                .authorizeHttpRequests(auth -> auth
-                         .anyRequest().permitAll()
-                )
-               .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeHttpRequests(req -> req
+                        .anyRequest().permitAll()
+                );
+        return http.build();
     }
+
 }

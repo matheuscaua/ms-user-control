@@ -1,4 +1,4 @@
-package com.inovacao.senai.netero.modelos.dto;
+package com.inovacao.senai.netero.modelos.dtos;
 
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;

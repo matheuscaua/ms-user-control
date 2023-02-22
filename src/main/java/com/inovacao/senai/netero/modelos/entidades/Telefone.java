@@ -2,10 +2,8 @@ package com.inovacao.senai.netero.modelos.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.inovacao.senai.netero.modelos.dto.EmpresaDTO;
 import jakarta.persistence.*;
 import lombok.Data;
-
 
 
 @Data
