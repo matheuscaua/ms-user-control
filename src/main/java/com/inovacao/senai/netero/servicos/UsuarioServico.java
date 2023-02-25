@@ -1,6 +1,7 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.modelos.dtos.AutenticacaoDTO;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.RoleRepositorio;
@@ -87,13 +88,13 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-    public UsuarioDTO buscarPorEmail(String email) {
+    public AutenticacaoDTO buscarPorEmail(String email) {
         var usuario = usuarioRepositorio.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("Usuario não existe!")
         );
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        BeanUtils.copyProperties(usuario, usuarioDTO);
-        return usuarioDTO;
+        AutenticacaoDTO autenticacaoDTO = new AutenticacaoDTO();
+        BeanUtils.copyProperties(usuario, autenticacaoDTO);
+        return autenticacaoDTO;
     }
 
 }
