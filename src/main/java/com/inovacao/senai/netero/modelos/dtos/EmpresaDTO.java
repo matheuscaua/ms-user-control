@@ -9,6 +9,7 @@ import lombok.NonNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,20 +17,26 @@ public class EmpresaDTO {
 
     @NotEmpty(message = "Nome obrigatório...")
     private String nome;
+
     @NotEmpty(message = "CNPJ obrigatório...")
     @CNPJ
     private String cnpj;
+
     @NotEmpty(message = "Senha obrigatória...")
     private String senha;
-    private boolean situacao;
+
+
     @NotEmpty(message = "Email obrigatória...")
+
     @Email
     private String email;
-    private String dt_cadastro;
 
+    private Date dt_cadastro;
 
     private Endereco endereco;
 
     @NonNull
     private List<Telefone> telefones = new ArrayList<>();
+
+    private boolean situacao;
 }

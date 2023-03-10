@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8000
 spring:
   application:
     name: ms-controle-usuario
@@ -16,11 +16,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8030
+          issuer-uri: http://localhost:8200
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
-
+jwksUri: http://localhost:8200/oauth2/jwks
 

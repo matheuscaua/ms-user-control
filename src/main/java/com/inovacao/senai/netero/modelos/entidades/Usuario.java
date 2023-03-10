@@ -1,5 +1,6 @@
 package com.inovacao.senai.netero.modelos.entidades;
 
+import com.inovacao.senai.netero.enums.SituacaoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "tb_usuario")
@@ -49,5 +51,9 @@ public class Usuario implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<>();
+
+    private SituacaoEnum situacao;
+
+    private Date dataCadastro;
 
 }

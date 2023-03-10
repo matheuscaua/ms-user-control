@@ -37,6 +37,8 @@ public class UsuarioServico {
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         var endereco = usuario.getEndereco();
 
+        usuario.
+
         if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
             usuarioValidadorComponente.adequarEndereco(endereco);
         }
