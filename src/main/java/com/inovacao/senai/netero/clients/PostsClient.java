@@ -1,5 +1,6 @@
 package com.inovacao.senai.netero.clients;
 
+import com.inovacao.senai.netero.modelos.dtos.EmpresaDTO;
 import com.inovacao.senai.netero.modelos.entidades.Empresa;
 import org.apache.coyote.Response;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "posts", url = "http://localhost:8400/")
 public interface PostsClient {
 
-    @PostMapping("/posts/cadastrar")
-    ResponseEntity gravarEmpresa(Empresa empresa);
+    @PostMapping("/posts/criarEmpresa")
+    ResponseEntity gravarEmpresa(EmpresaDTO empresa);
 
 }
