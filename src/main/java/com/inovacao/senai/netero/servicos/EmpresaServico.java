@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 @Service
 public class EmpresaServico {
@@ -41,6 +42,7 @@ public class EmpresaServico {
         Role roles = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
         empresa.setRoles(Collections.singletonList(roles));
 
+        empresa.setDataCadastro(new Date());
         empresaRepositorio.save(empresa);
 
         criarEmpresaPosts(empresa, new EmpresaDTO());
