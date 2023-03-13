@@ -3,6 +3,7 @@ package com.inovacao.senai.netero.servicos;
 import com.inovacao.senai.netero.clients.PostsClient;
 import com.inovacao.senai.netero.componentes.ValidadorEndereco;
 import com.inovacao.senai.netero.enums.RoleEnum;
+import com.inovacao.senai.netero.enums.SituacaoEnum;
 import com.inovacao.senai.netero.modelos.dtos.EmpresaDTO;
 import com.inovacao.senai.netero.modelos.entidades.Empresa;
 import com.inovacao.senai.netero.modelos.entidades.Role;
@@ -42,6 +43,7 @@ public class EmpresaServico {
         Role roles = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
         empresa.setRoles(Collections.singletonList(roles));
 
+        empresa.setSituacao(SituacaoEnum.ATIVO);
         empresa.setDataCadastro(new Date());
         empresaRepositorio.save(empresa);
 
