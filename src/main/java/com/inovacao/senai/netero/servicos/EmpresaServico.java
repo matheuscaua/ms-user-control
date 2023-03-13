@@ -27,12 +27,9 @@ public class EmpresaServico {
     @Autowired
     private PostsClient postsClient;
 
-    private ValidadorEndereco usuarioValidadorComponente;
-
-
+    private  ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
 
     public void cadastrar(Empresa empresa) {
-        empresa.setSenha(new BCryptPasswordEncoder().encode(empresa.getSenha()));
         var endereco = empresa.getEndereco();
         if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
             usuarioValidadorComponente.adequarEndereco(endereco);
@@ -43,7 +40,9 @@ public class EmpresaServico {
         endereco.setEmpresa(empresa);
         Role roles = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
         empresa.setRoles(Collections.singletonList(roles));
+
         empresaRepositorio.save(empresa);
+
         criarEmpresaPosts(empresa, new EmpresaDTO());
     }
 
