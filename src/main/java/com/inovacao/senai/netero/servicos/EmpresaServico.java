@@ -6,6 +6,7 @@ import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.enums.SituacaoEnum;
 import com.inovacao.senai.netero.modelos.dtos.EmpresaDTO;
 import com.inovacao.senai.netero.modelos.entidades.Empresa;
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.repositorios.EmpresaRepositorio;
@@ -33,26 +34,35 @@ public class EmpresaServico {
 
     public void cadastrar(Empresa empresa) {
         var endereco = empresa.getEndereco();
-        if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
-            usuarioValidadorComponente.adequarEndereco(endereco);
-        }
-        for (Telefone telefone : empresa.getTelefones()) {
-            telefone.setEmpresa(empresa);
-        }
+        setarEndereco(endereco);
+        setarTelefone(empresa);
         endereco.setEmpresa(empresa);
-        Role roles = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
-        empresa.setRoles(Collections.singletonList(roles));
-
+        setarAutorizacao(empresa);
         empresa.setSituacao(SituacaoEnum.ATIVO);
         empresa.setDataCadastro(new Date());
         empresaRepositorio.save(empresa);
-
         criarEmpresaPosts(empresa, new EmpresaDTO());
     }
 
     public void criarEmpresaPosts(Empresa empresa,EmpresaDTO empresaDTO){
         BeanUtils.copyProperties(empresa,empresaDTO);
         postsClient.gravarEmpresa(empresaDTO);
+    }
+
+    public void setarEndereco(Endereco endereco){
+        if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
+            usuarioValidadorComponente.adequarEndereco(endereco);
+        }
+    }
+    public void setarAutorizacao(Empresa empresa){
+        Role role = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
+        if(role == null) throw new NullPointerException("Role inexistente");
+        empresa.setRoles(Collections.singletonList(role));
+    }
+    public void setarTelefone(Empresa empresa){
+        for (Telefone telefone : empresa.getTelefones()) {
+            telefone.setEmpresa(empresa);
+        }
     }
 
 }

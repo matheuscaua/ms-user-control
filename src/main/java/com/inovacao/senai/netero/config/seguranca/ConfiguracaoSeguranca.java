@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@EnableWebSecurity
+
 @Configuration
 public class ConfiguracaoSeguranca {
 
@@ -18,9 +18,7 @@ public class ConfiguracaoSeguranca {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/usuario/email/{email}").permitAll()
-                        .requestMatchers("/usuario/cadastrar").permitAll()
-                        .requestMatchers("/empresa/cadastrar").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(
                         r -> r.jwt().jwkSetUri(jwksUri)

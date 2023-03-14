@@ -2,6 +2,7 @@ package com.inovacao.senai.netero.servicos;
 
 
 import com.inovacao.senai.netero.modelos.dtos.AutenticacaoDTO;
+import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.RoleRepositorio;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,21 +37,34 @@ public class UsuarioServico {
 
     public void cadastrar(Usuario usuario) {
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
-        var endereco = usuario.getEndereco();
+        setarTelefone(usuario);
+        setarEndereco(usuario);
+        setarAutorizacao(usuario);
+        usuario.setDataCadastro(new Date());
+        usuarioRepositorio.save(usuario);
+    }
 
+    public void verificarEndereco(Endereco endereco){
         if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
             usuarioValidadorComponente.adequarEndereco(endereco);
         }
+    }
 
+    public void setarEndereco(Usuario usuario){
+        var endereco = usuario.getEndereco();
+        verificarEndereco(endereco);
+        endereco.setUsuario(usuario);
+    }
+
+    public void setarTelefone(Usuario usuario){
         for (Telefone telefone : usuario.getTelefones()) {
             telefone.setUsuario(usuario);
         }
-        endereco.setUsuario(usuario);
+    }
 
+    public void setarAutorizacao(Usuario usuario){
         Role roles = roleRepositorio.findByIdentificador(RoleEnum.CANDIDATO);
         usuario.setRoles(Collections.singletonList(roles));
-
-        usuarioRepositorio.save(usuario);
     }
 
     public List<Usuario> buscarNome(String nome) {
