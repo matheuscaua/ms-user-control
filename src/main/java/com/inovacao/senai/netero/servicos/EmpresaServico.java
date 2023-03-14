@@ -33,10 +33,8 @@ public class EmpresaServico {
     private  ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
 
     public void cadastrar(Empresa empresa) {
-        var endereco = empresa.getEndereco();
-        setarEndereco(endereco);
+        setarEndereco(empresa);
         setarTelefone(empresa);
-        endereco.setEmpresa(empresa);
         setarAutorizacao(empresa);
         empresa.setSituacao(SituacaoEnum.ATIVO);
         empresa.setDataCadastro(new Date());
@@ -47,9 +45,14 @@ public class EmpresaServico {
     public void criarEmpresaPosts(Empresa empresa,EmpresaDTO empresaDTO){
         BeanUtils.copyProperties(empresa,empresaDTO);
         postsClient.gravarEmpresa(empresaDTO);
-    }
 
-    public void setarEndereco(Endereco endereco){
+    }
+    public void setarEndereco(Empresa empresa){
+        var endereco = empresa.getEndereco();
+        verificarEndereco(endereco);
+        endereco.setEmpresa(empresa);
+    }
+    public void verificarEndereco(Endereco endereco){
         if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
             usuarioValidadorComponente.adequarEndereco(endereco);
         }

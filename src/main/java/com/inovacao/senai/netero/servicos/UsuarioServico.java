@@ -1,6 +1,7 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.enums.SituacaoEnum;
 import com.inovacao.senai.netero.modelos.dtos.AutenticacaoDTO;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
@@ -40,6 +41,7 @@ public class UsuarioServico {
         setarTelefone(usuario);
         setarEndereco(usuario);
         setarAutorizacao(usuario);
+        usuario.setSituacao(SituacaoEnum.ATIVO);
         usuario.setDataCadastro(new Date());
         usuarioRepositorio.save(usuario);
     }
