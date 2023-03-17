@@ -30,7 +30,7 @@ public class EmpresaServico {
     @Autowired
     private PostsClient postsClient;
 
-    private  ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
+    private ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
 
     public void cadastrar(Empresa empresa) {
         setarEndereco(empresa);

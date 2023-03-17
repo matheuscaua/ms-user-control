@@ -1,8 +1,9 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.clients.SegurancaClient;
 import com.inovacao.senai.netero.enums.SituacaoEnum;
-import com.inovacao.senai.netero.modelos.dtos.AutenticacaoDTO;
+import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.modelos.entidades.Telefone;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
@@ -13,6 +14,7 @@ import com.inovacao.senai.netero.modelos.dtos.UsuarioDTO;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 
 import com.inovacao.senai.netero.componentes.ValidadorEndereco;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,15 +28,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UsuarioServico {
 
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
-    private RoleRepositorio roleRepositorio;
+    private final RoleRepositorio roleRepositorio;
 
-    private final ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
+    private final ValidadorEndereco usuarioValidadorComponente;
+
+    private final SegurancaClient segurancaClient;
 
     public void cadastrar(Usuario usuario) {
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
@@ -43,6 +46,7 @@ public class UsuarioServico {
         setarAutorizacao(usuario);
         usuario.setSituacao(SituacaoEnum.ATIVO);
         usuario.setDataCadastro(new Date());
+        cadastrarCrendencial(usuario);
         usuarioRepositorio.save(usuario);
     }
 
@@ -105,13 +109,18 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-    public AutenticacaoDTO buscarPorEmail(String email) {
+    public CredencialDTO buscarPorEmail(String email) {
         var usuario = usuarioRepositorio.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("Usuario não existe!")
         );
-        AutenticacaoDTO autenticacaoDTO = new AutenticacaoDTO();
+        CredencialDTO autenticacaoDTO = new CredencialDTO();
         BeanUtils.copyProperties(usuario, autenticacaoDTO);
         return autenticacaoDTO;
     }
+    public void cadastrarCrendencial(Usuario usuario){
+        segurancaClient.cadastrarCredencial(
+                new CredencialDTO(usuario.getEmail(),usuario.getSenha(), usuario.getRoles())
+        );
 
+    }
 }

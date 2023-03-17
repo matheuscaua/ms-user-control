@@ -1,7 +1,6 @@
 package com.inovacao.senai.netero.controladores;
 
-import com.inovacao.senai.netero.modelos.dtos.AutenticacaoDTO;
-import com.inovacao.senai.netero.modelos.dtos.UsuarioDTO;
+import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +60,7 @@ public class UsuarioControlador {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<AutenticacaoDTO> buscarPorEmail(@PathVariable String email) {
+    public ResponseEntity<CredencialDTO> buscarPorEmail(@PathVariable String email) {
         try {
             return ResponseEntity.status(200).body(usuarioServico.buscarPorEmail(email));
         } catch (UsernameNotFoundException e) {
