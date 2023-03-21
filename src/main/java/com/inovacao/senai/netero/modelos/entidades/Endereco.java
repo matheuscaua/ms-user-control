@@ -24,12 +24,10 @@ public class Endereco implements Serializable {
     private String uf;
 
     @JsonIgnore
-    @JoinColumn(name = "usuario_id")
     @OneToOne
     private Usuario usuario;
 
     @JsonIgnore
-    @JoinColumn(name = "empresa_id")
     @OneToOne
     private Empresa empresa;
 }

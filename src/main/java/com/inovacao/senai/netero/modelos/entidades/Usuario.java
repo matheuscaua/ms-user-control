@@ -43,7 +43,7 @@ public class Usuario implements Serializable{
     private Endereco endereco;
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Telefone> telefones = new ArrayList<>();
+    private List<Telefone> telefones;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tb_usuarios_roles",

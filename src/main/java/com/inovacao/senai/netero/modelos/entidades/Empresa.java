@@ -13,19 +13,18 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Empresa {
-
-    private Date dataCadastro;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     @Column(unique = true)
     private String cnpj;
     private String senha;
-
+    private SituacaoEnum situacao;
     @Column(unique = true)
     private String email;
+    private String dt_cadastro;
 
     @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;
@@ -39,7 +38,4 @@ public class Empresa {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<>();
-
-    @Enumerated(EnumType.STRING)
-    private SituacaoEnum situacao;
 }

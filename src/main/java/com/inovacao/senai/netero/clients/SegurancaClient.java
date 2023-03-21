@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "seguranca", url = "http://localhost:8200/")
 public interface SegurancaClient {
 
-    @PostMapping("cadastrarCredencial")
+    @PostMapping("/cadastrarCredencial")
     ResponseEntity cadastrarCredencial(CredencialDTO credencialDTO);
 
 }

@@ -59,13 +59,4 @@ public class UsuarioControlador {
         }
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<CredencialDTO> buscarPorEmail(@PathVariable String email) {
-        try {
-            return ResponseEntity.status(200).body(usuarioServico.buscarPorEmail(email));
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(204).build();
-        }
-    }
-
 }
