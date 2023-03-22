@@ -24,7 +24,7 @@ public class Empresa {
     private SituacaoEnum situacao;
     @Column(unique = true)
     private String email;
-    private String dt_cadastro;
+    private Date dataCadastro;
 
     @OneToOne(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;

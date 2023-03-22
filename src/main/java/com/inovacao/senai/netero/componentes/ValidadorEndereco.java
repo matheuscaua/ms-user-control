@@ -13,8 +13,9 @@ public class ValidadorEndereco {
     @Autowired
     private ViaCepServico viaCepServico;
 
-    public boolean verificarAdequacaoEndereco(Endereco endereco) {
-        boolean flag = endereco.getLogradouro() == null || endereco.getLogradouro().isEmpty();
+    public boolean verificarEndereco(Endereco endereco) {
+        boolean flag = false;
+        if (endereco.getLogradouro() == null || endereco.getLogradouro().isEmpty()) flag = true;
         if (endereco.getBairro() == null || endereco.getBairro().isEmpty()) flag = true;
         if (endereco.getLocalidade() == null || endereco.getLocalidade().isEmpty()) flag = true;
         if (endereco.getUf() == null || endereco.getUf().isEmpty()) flag = true;
@@ -24,18 +25,11 @@ public class ValidadorEndereco {
     public void adequarEndereco(Endereco endereco) {
         var viaCepDTO = viaCepServico.buscarDadosViaCep(endereco.getCep());
         if (viaCepDTO != null && (viaCepDTO.getLogradouro() != null && !viaCepDTO.getLogradouro().isEmpty())) {
-            if (!endereco.getBairro().equals(viaCepDTO.getBairro()) || endereco.getBairro().isEmpty()) {
-                endereco.setBairro(viaCepDTO.getBairro());
-            }
-            if (!endereco.getLogradouro().equals(viaCepDTO.getLogradouro())) {
-                endereco.setLogradouro(viaCepDTO.getLogradouro());
-            }
-            if (!endereco.getLocalidade().equals(viaCepDTO.getLocalidade())) {
-                endereco.setLocalidade(viaCepDTO.getLocalidade());
-            }
-            if (!endereco.getUf().equals(viaCepDTO.getUf())) {
-                endereco.setUf(viaCepDTO.getUf());
-            }
+            endereco.setLocalidade(viaCepDTO.getLocalidade());
+            endereco.setBairro(viaCepDTO.getBairro());
+            endereco.setUf(viaCepDTO.getUf());
+            endereco.setLogradouro(viaCepDTO.getLogradouro());
+            endereco.setCep(viaCepDTO.getCep());
         }
     }
 

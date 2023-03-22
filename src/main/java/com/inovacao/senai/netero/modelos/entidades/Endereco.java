@@ -4,6 +4,7 @@ package com.inovacao.senai.netero.modelos.entidades;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 
 import java.io.Serializable;
 
@@ -22,12 +23,9 @@ public class Endereco implements Serializable {
     private String bairro;
     private String localidade;
     private String uf;
-
-    @JsonIgnore
     @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Usuario usuario;
-
-    @JsonIgnore
     @OneToOne
     private Empresa empresa;
 }

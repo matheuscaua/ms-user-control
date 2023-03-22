@@ -13,12 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Collections;
-
+import java.util.Date;
 @Service
 public class EmpresaServico {
-
     @Autowired
     private EmpresaRepositorio empresaRepositorio;
     @Autowired
@@ -26,21 +24,26 @@ public class EmpresaServico {
     @Autowired
     private PostsClient postsClient;
 
-    private ValidadorEndereco usuarioValidadorComponente = new ValidadorEndereco();
-
     public void cadastrar(Empresa empresa) {
-        var endereco = empresa.getEndereco();
-        endereco.setEmpresa(empresa);
+        empresa.setSenha(new BCryptPasswordEncoder().encode(empresa.getSenha()));
         empresa.getTelefones().stream().forEach(telefone -> telefone.setEmpresa(empresa));
-        if (usuarioValidadorComponente.verificarAdequacaoEndereco(endereco)) {
-            usuarioValidadorComponente.adequarEndereco(endereco);
-        }
-        Role roles = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
-        empresa.setRoles(Collections.singletonList(roles));
+        setarEndereco(empresa);
+        setarAutorizacao(empresa);
         empresa.setSituacao(SituacaoEnum.ATIVO);
+        empresa.setDataCadastro(new Date());
         empresaRepositorio.save(empresa);
     }
-
+    protected void setarEndereco(Empresa empresa){
+        ValidadorEndereco validadorEndereco = new ValidadorEndereco();
+        var endereco = empresa.getEndereco();
+        if (validadorEndereco.verificarEndereco(endereco)) validadorEndereco.adequarEndereco(endereco);
+        endereco.setEmpresa(empresa);
+    }
+    protected void setarAutorizacao(Empresa empresa){
+        Role role = roleRepositorio.findByIdentificador(RoleEnum.EMPRESA);
+        if(role == null) throw new NullPointerException("Role nula!");
+        empresa.setRoles(Collections.singletonList(role));
+    }
     public void criarEmpresaPosts(Empresa empresa,EmpresaDTO empresaDTO){
         BeanUtils.copyProperties(empresa,empresaDTO);
         postsClient.gravarEmpresa(empresaDTO);

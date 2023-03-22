@@ -1,12 +1,10 @@
 package com.inovacao.senai.netero.controladores;
 
-import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.servicos.UsuarioServico;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

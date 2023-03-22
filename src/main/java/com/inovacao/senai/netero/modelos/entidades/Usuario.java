@@ -39,10 +39,10 @@ public class Usuario implements Serializable{
     @Column(unique = true)
     private String rg;
 
-    @OneToOne(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Telefone> telefones;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -52,6 +52,7 @@ public class Usuario implements Serializable{
     )
     private List<Role> roles = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
     private SituacaoEnum situacao;
 
     private Date dataCadastro;
