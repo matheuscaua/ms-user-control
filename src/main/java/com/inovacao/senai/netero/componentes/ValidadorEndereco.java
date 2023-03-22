@@ -1,5 +1,6 @@
 package com.inovacao.senai.netero.componentes;
 
+import com.inovacao.senai.netero.clients.ViaCepClient;
 import com.inovacao.senai.netero.modelos.entidades.Endereco;
 import com.inovacao.senai.netero.servicos.ViaCepServico;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ValidadorEndereco {
 
     @Autowired
-    private ViaCepServico viaCepServico;
+    private ViaCepClient viaCepClient;
 
     public boolean verificarEndereco(Endereco endereco) {
         boolean flag = false;
@@ -23,7 +24,7 @@ public class ValidadorEndereco {
     }
 
     public void adequarEndereco(Endereco endereco) {
-        var viaCepDTO = viaCepServico.buscarDadosViaCep(endereco.getCep());
+        var viaCepDTO = viaCepClient.buscarDadosViaCep(endereco.getCep());
         if (viaCepDTO != null && (viaCepDTO.getLogradouro() != null && !viaCepDTO.getLogradouro().isEmpty())) {
             endereco.setLocalidade(viaCepDTO.getLocalidade());
             endereco.setBairro(viaCepDTO.getBairro());

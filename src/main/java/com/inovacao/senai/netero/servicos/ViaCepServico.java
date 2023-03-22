@@ -11,8 +11,6 @@ public class ViaCepServico {
 
     @Autowired
     private ViaCepClient viaCepClient;
-
-
     public ViaCepDTO buscarDadosViaCep(String cep) {
         return viaCepClient.buscarDadosViaCep(cep);
     }

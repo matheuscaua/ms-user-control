@@ -25,7 +25,7 @@ public class UsuarioServico {
     private RoleRepositorio roleRepositorio;
     @Autowired
     private SegurancaClient segurancaClient;
-    public void cadastrar(Usuario usuario) {
+    public void cadastrar(Usuario usuario) throws Exception {
         try {
             usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
             usuario.getTelefones().stream().forEach(telefone -> telefone.setUsuario(usuario));
@@ -36,9 +36,9 @@ public class UsuarioServico {
             usuarioRepositorio.save(usuario);
             segurancaClient.cadastrarCredencial(new CredencialDTO(usuario.getEmail(), usuario.getSenha(), usuario.getRoles()));
         }catch (FeignException e){
-            e.getMessage();
+            throw new Exception();
         }catch (NullPointerException e){
-            e.getMessage();
+            throw new Exception();
         }catch (Exception e){
             e.getMessage();
         }
