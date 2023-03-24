@@ -7,14 +7,15 @@ import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String cep;
     private String logradouro;

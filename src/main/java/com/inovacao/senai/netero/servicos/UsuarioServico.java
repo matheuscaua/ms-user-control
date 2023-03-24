@@ -14,6 +14,8 @@ import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +36,7 @@ public class UsuarioServico {
             usuario.setDataCadastro(new Date());
             usuario.setSituacao(SituacaoEnum.ATIVO);
             usuarioRepositorio.save(usuario);
-            segurancaClient.cadastrarCredencial(new CredencialDTO(usuario.getEmail(), usuario.getSenha(), usuario.getRoles()));
+            segurancaClient.cadastrarCredencial(new CredencialDTO(usuario.getEmail(), usuario.getSenha()));
         }catch (FeignException e){
             throw new Exception();
         }catch (NullPointerException e){
@@ -52,7 +54,7 @@ public class UsuarioServico {
     protected void setarAutorizacoes(Usuario usuario){
         Role role = roleRepositorio.findByIdentificador(RoleEnum.CANDIDATO);
         if(role == null) throw new NullPointerException();
-        usuario.setRoles(Collections.singletonList(role));
+        usuario.setRole(Collections.singletonList(role));
     }
     public List<Usuario> buscarNome(String nome) {
         List<Usuario> usuarios = usuarioRepositorio.buscarUsuarioPorNome(nome);
@@ -65,11 +67,11 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-    public void deletar(String cpf, String email) {
+    /*public void deletar(String cpf, String email) {
         var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
         if (usuario != null) if (email.equals(usuario.getEmail())) usuarioRepositorio.deleteById(usuario.getId());
         throw new NullPointerException();
-    }
+    }*/
 
 
 }

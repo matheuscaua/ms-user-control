@@ -7,15 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmpresaDTO {
-
-    private Long id;
-
     private String nome;
-
+    private String cnpj;
     @Enumerated(EnumType.STRING)
     private SituacaoEnum situacao;
 }

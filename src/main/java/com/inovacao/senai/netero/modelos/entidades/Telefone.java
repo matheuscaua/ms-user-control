@@ -5,14 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 
 @Data
 @Entity
 @Table(name = "tb_telefone")
 public class Telefone {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String numero;
 

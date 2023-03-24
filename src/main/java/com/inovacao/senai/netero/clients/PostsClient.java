@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "posts", url = "http://localhost:8400/")
+@FeignClient(name = "ms-posts")
 public interface PostsClient {
 
     @PostMapping("/posts/criarEmpresa")

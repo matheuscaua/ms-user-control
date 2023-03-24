@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "email", url = "http://MS-EMAIL")
+@FeignClient(name = "ms-email")
 public interface EmailClient {
     @PostMapping("/enviar-email")
     ResponseEntity enviarEmail(EmailDTO emailDTO);

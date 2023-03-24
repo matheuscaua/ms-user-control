@@ -10,10 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "tb_usuario")
 @Data
@@ -22,8 +19,8 @@ import java.util.List;
 public class Usuario implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String nome;
 
@@ -46,11 +43,11 @@ public class Usuario implements Serializable{
     private List<Telefone> telefones;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "tb_usuarios_roles",
-            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JoinTable(name = "equipment",
+            joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id")
     )
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> role;
 
     @Enumerated(EnumType.STRING)
     private SituacaoEnum situacao;

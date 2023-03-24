@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "seguranca", url = "http://localhost:8200/")
+@FeignClient(name = "ms-authorization-server")
 public interface SegurancaClient {
 
     @PostMapping("/cadastrarCredencial")

@@ -12,9 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CredencialDTO implements Serializable {
-
     private String email;
     private String senha;
-
-    private List<Role> roles;
 }

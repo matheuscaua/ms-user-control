@@ -34,7 +34,7 @@ public class EmpresaServico {
             empresa.setSituacao(SituacaoEnum.ATIVO);
             empresa.setDataCadastro(new Date());
             empresaRepositorio.save(empresa);
-            criarEmpresaPosts(new EmpresaDTO(empresa.getId(), empresa.getNome(), empresa.getSituacao()));
+            criarEmpresaPosts(new EmpresaDTO(empresa.getNome(),empresa.getCnpj() ,empresa.getSituacao()));
         }catch (FeignException e){
             e.getMessage();
         }catch (NullPointerException e){

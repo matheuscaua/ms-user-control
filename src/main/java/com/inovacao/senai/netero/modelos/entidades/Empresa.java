@@ -7,6 +7,7 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Entity(name = "tb_empresa")
 @Data
@@ -14,9 +15,8 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class Empresa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String nome;
     @Column(unique = true)
     private String cnpj;
