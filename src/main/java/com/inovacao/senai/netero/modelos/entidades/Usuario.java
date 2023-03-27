@@ -43,9 +43,9 @@ public class Usuario implements Serializable{
     private List<Telefone> telefones;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "equipment",
-            joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinTable(name = "tb_usuarios_roles",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> role;
 
