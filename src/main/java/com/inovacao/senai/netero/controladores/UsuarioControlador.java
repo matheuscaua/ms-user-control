@@ -47,7 +47,7 @@ public class UsuarioControlador {
         }
     }
 
-   /* @DeleteMapping("/{cpf}/{email}")
+   @DeleteMapping("/{cpf}/{email}")
     public ResponseEntity deletarUsuario(@PathVariable String cpf, @PathVariable String email) {
         try {
             usuarioServico.deletar(cpf, email);
@@ -55,6 +55,6 @@ public class UsuarioControlador {
         } catch (NullPointerException e) {
             return ResponseEntity.status(204).build();
         }
-    }*/
+    }
 
 }

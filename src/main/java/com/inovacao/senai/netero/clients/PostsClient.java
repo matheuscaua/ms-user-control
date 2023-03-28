@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(name = "ms-posts")
 public interface PostsClient {
 
-    @PostMapping("/posts/criarEmpresa")
+    @PostMapping("/posts/cadastrarEmpresa")
     ResponseEntity gravarEmpresa(EmpresaDTO empresa);
 
 }

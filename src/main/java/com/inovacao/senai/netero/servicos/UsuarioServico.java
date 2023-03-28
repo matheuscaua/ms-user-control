@@ -67,11 +67,11 @@ public class UsuarioServico {
         throw new NullPointerException();
     }
 
-    /*public void deletar(String cpf, String email) {
+    public void deletar(String cpf, String email) {
         var usuario = usuarioRepositorio.buscarUsuarioPorCpf(cpf);
         if (usuario != null) if (email.equals(usuario.getEmail())) usuarioRepositorio.deleteById(usuario.getId());
         throw new NullPointerException();
-    }*/
+    }
 
 
 }

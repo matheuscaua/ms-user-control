@@ -4,11 +4,12 @@ spring:
   application:
     name: ms-controle-usuario
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/controle
-    username: root
-    password: mysql
+    url: jdbc:postgresql://localhost:5432/controle
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: root
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: update
     generate-ddl: true
     show-sql: true

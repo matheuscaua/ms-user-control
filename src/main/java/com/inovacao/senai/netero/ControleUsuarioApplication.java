@@ -7,10 +7,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class NeteroApplication {
+public class ControleUsuarioApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NeteroApplication.class, args);
+        SpringApplication.run(ControleUsuarioApplication.class, args);
     }
 
 }
