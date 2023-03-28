@@ -46,7 +46,7 @@ public class EmpresaServico {
     protected void setarEndereco(Empresa empresa){
         ValidadorEndereco validadorEndereco = new ValidadorEndereco();
         var endereco = empresa.getEndereco();
-        if (validadorEndereco.verificarEndereco(endereco)) validadorEndereco.adequarEndereco(endereco);
+        //if (validadorEndereco.verificarEndereco(endereco)) validadorEndereco.adequarEndereco(endereco);
         endereco.setEmpresa(empresa);
     }
     protected void setarAutorizacao(Empresa empresa){

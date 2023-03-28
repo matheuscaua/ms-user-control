@@ -48,7 +48,7 @@ public class UsuarioServico {
     protected void setarEnderecoUsuario(Usuario usuario){
         ValidadorEndereco validadorEndereco = new ValidadorEndereco();
         var endereco = usuario.getEndereco();
-        if (validadorEndereco.verificarEndereco(endereco)) validadorEndereco.adequarEndereco(endereco);
+       // if (validadorEndereco.verificarEndereco(endereco)) validadorEndereco.adequarEndereco(endereco);
         endereco.setUsuario(usuario);
     }
     protected void setarAutorizacoes(Usuario usuario){

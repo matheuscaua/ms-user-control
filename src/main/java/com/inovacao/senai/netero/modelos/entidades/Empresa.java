@@ -21,6 +21,7 @@ public class Empresa {
     @Column(unique = true)
     private String cnpj;
     private String senha;
+    @Enumerated(EnumType.STRING)
     private SituacaoEnum situacao;
     @Column(unique = true)
     private String email;

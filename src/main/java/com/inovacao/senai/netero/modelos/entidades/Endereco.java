@@ -16,7 +16,6 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     private String cep;
     private String logradouro;
     private String numero;
