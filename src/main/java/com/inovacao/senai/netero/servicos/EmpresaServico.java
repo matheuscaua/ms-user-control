@@ -1,9 +1,11 @@
 package com.inovacao.senai.netero.servicos;
 
 import com.inovacao.senai.netero.clients.PostsClient;
+import com.inovacao.senai.netero.clients.SegurancaClient;
 import com.inovacao.senai.netero.componentes.ValidadorEndereco;
 import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.enums.SituacaoEnum;
+import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
 import com.inovacao.senai.netero.modelos.dtos.EmpresaDTO;
 import com.inovacao.senai.netero.modelos.entidades.Empresa;
 import com.inovacao.senai.netero.modelos.entidades.Role;
@@ -25,6 +27,9 @@ public class EmpresaServico {
     @Autowired
     private PostsClient postsClient;
 
+    @Autowired
+    private SegurancaClient segurancaClient;
+
     public void cadastrar(Empresa empresa) {
         try {
             empresa.setSenha(new BCryptPasswordEncoder().encode(empresa.getSenha()));
@@ -35,6 +40,7 @@ public class EmpresaServico {
             empresa.setDataCadastro(new Date());
             empresaRepositorio.save(empresa);
             criarEmpresaPosts(new EmpresaDTO(empresa.getNome(),empresa.getCnpj() ,empresa.getSituacao()));
+            segurancaClient.cadastrarCredencial(new CredencialDTO(empresa.getEmail(), empresa.getSenha()));
         }catch (FeignException e){
             e.getMessage();
         }catch (NullPointerException e){
