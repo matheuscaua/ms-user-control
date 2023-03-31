@@ -1,9 +1,11 @@
 package com.inovacao.senai.netero.servicos;
 
 
+import com.inovacao.senai.netero.clients.EmailClient;
 import com.inovacao.senai.netero.clients.SegurancaClient;
 import com.inovacao.senai.netero.enums.SituacaoEnum;
 import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
+import com.inovacao.senai.netero.modelos.dtos.EmailDTO;
 import com.inovacao.senai.netero.modelos.entidades.Usuario;
 import com.inovacao.senai.netero.repositorios.RoleRepositorio;
 import com.inovacao.senai.netero.repositorios.UsuarioRepositorio;
@@ -27,6 +29,8 @@ public class UsuarioServico {
     private RoleRepositorio roleRepositorio;
     @Autowired
     private SegurancaClient segurancaClient;
+    @Autowired
+    private EmailClient emailClient;
     public void cadastrar(Usuario usuario) throws Exception {
         try {
             usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
@@ -37,6 +41,7 @@ public class UsuarioServico {
             usuario.setSituacao(SituacaoEnum.ATIVO);
             usuarioRepositorio.save(usuario);
             segurancaClient.cadastrarCredencial(new CredencialDTO(usuario.getEmail(), usuario.getSenha()));
+            emailClient.enviarEmail(new EmailDTO(usuario.getNome(), usuario.getEmail(), "Candidato Cadastrado!","Sucesso!"));
         }catch (FeignException e){
             throw new Exception();
         }catch (NullPointerException e){

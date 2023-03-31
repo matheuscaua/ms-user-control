@@ -2,9 +2,11 @@ package com.inovacao.senai.netero.modelos.entidades;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
+
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -12,7 +14,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "tb_endereco")
-public class Endereco implements Serializable {
+public class Endereco{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -23,9 +25,12 @@ public class Endereco implements Serializable {
     private String bairro;
     private String localidade;
     private String uf;
+
+    @JsonIgnore
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Usuario usuario;
+    @JsonIgnore
     @OneToOne
     private Empresa empresa;
 }

@@ -36,7 +36,7 @@ public class Usuario implements Serializable{
     @Column(unique = true)
     private String rg;
 
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Endereco endereco;
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

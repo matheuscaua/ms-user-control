@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/usuario")
+@CrossOrigin("*")
 public class UsuarioControlador {
 
     @Autowired

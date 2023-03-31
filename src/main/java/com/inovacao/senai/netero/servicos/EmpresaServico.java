@@ -1,16 +1,19 @@
 package com.inovacao.senai.netero.servicos;
 
+import com.inovacao.senai.netero.clients.EmailClient;
 import com.inovacao.senai.netero.clients.PostsClient;
 import com.inovacao.senai.netero.clients.SegurancaClient;
 import com.inovacao.senai.netero.componentes.ValidadorEndereco;
 import com.inovacao.senai.netero.enums.RoleEnum;
 import com.inovacao.senai.netero.enums.SituacaoEnum;
 import com.inovacao.senai.netero.modelos.dtos.CredencialDTO;
+import com.inovacao.senai.netero.modelos.dtos.EmailDTO;
 import com.inovacao.senai.netero.modelos.dtos.EmpresaDTO;
 import com.inovacao.senai.netero.modelos.entidades.Empresa;
 import com.inovacao.senai.netero.modelos.entidades.Role;
 import com.inovacao.senai.netero.repositorios.EmpresaRepositorio;
 import com.inovacao.senai.netero.repositorios.RoleRepositorio;
+import com.netflix.discovery.converters.Auto;
 import feign.FeignException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,10 @@ public class EmpresaServico {
     private RoleRepositorio roleRepositorio;
     @Autowired
     private PostsClient postsClient;
-
     @Autowired
     private SegurancaClient segurancaClient;
-
+    @Autowired
+    private EmailClient emailClient;
     public void cadastrar(Empresa empresa) {
         try {
             empresa.setSenha(new BCryptPasswordEncoder().encode(empresa.getSenha()));
@@ -41,6 +44,7 @@ public class EmpresaServico {
             empresaRepositorio.save(empresa);
             criarEmpresaPosts(new EmpresaDTO(empresa.getNome(),empresa.getCnpj() ,empresa.getSituacao()));
             segurancaClient.cadastrarCredencial(new CredencialDTO(empresa.getEmail(), empresa.getSenha()));
+            emailClient.enviarEmail(new EmailDTO(empresa.getNome(), empresa.getEmail(),"Empresa cadastrada!", "Sucesso!"));
         }catch (FeignException e){
             e.getMessage();
         }catch (NullPointerException e){
